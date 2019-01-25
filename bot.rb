@@ -309,6 +309,7 @@ end
 
 def eightball
 	ra(EIGHTBALL)
+	puts ("convert -alpha set -background none -rotate #{rand(200).to_f/10} eightball/#{rand(20)}.png eightball/answer.png")
 end
 
 puts deter("ship lucky and bluey")
