@@ -145,6 +145,44 @@ $db = {
 	},
 }
 
+FORTUNE = [
+'Reply hazy, try again',
+'Excellent Luck',
+'Good Luck',
+'Average Luck',
+'Bad Luck',
+'Good news will come to you by mail',
+'（　´_ゝ`）ﾌｰﾝ',
+'ｷﾀ━━━━━━(ﾟ∀ﾟ)━━━━━━ !!!!',
+'You will meet a dark handsome stranger',
+'Better not tell you now',
+'Outlook good',
+'Very Bad Luck',
+'Godly Luck']
+
+EIGHTBALL = [
+'It is certain.',
+'It is decidedly so.',
+'Without a doubt.',
+'Yes - definitely.',
+'You may rely on it',
+'As I see it, yes',
+'Most likely.',
+'Outlook good.',
+'Yes.',
+'Signs point to yes.',
+'Reply hazy, try again later',
+'Ask again later.',
+'Better not tell you now.',
+'Cannot predict now.',
+'Concentrate and ask again.',
+'Don\'t count on it',
+'My reply is no.',
+'My sources say no.',
+'Outlook not so good',
+'Very doubtful'
+]
+
 
 def f(name)
 	return if name.nil?
@@ -217,11 +255,11 @@ def calculate(a_h, b_h)
 	end
 
 	unless no
-		ary << case ([a_name, b_name].sort.hash % 2)
-		when 1 then ra(["What can I say, it's sheer destiny for them.",
+		ary << case ([a_name, b_name].join.length % 2)
+		when 0 then ra(["What can I say, it's sheer destiny for them.",
 		    "They'd be perfect together <3.",
 		"I agree, that would work."])
-		when 0 then ra(["No way.",
+		when 1 then ra(["No way.",
 		    "Can't recommend it really.",
 		"Don't think they were made for each other really."])
 	end
@@ -265,15 +303,34 @@ def deter(phrs)
 
 end
 
-puts deter("bilby ship bandit and bluey")
-puts deter("ship bandit and bluey")
+def fortune
+	"Your fortune: #{ra(FORTUNE)}"
+end
+
+def eightball
+	ra(EIGHTBALL)
+end
+
+puts deter("ship lucky and bluey")
+puts fortune
+puts eightball
+
+exit unless ENV['PRODUCTION']
 
 require 'discordrb'
 
 bot = Discordrb::Bot.new token: File.read('token').strip
 
-bot.message(content: /bilby.* ship.*/i, in: 'bob-bilby') do |event|
+bot.message(content: /bilby,? ship.*/i, in: 'bob-bilby') do |event|
 	event.respond(deter(event.content))
+end
+
+bot.message(content: /bilby,? #fortune/i, in: 'bob-bilby') do |event|
+	event.respond(fortune)
+end
+
+bot.message(content: /bilby,? ask 8-?ball.*/i, in: 'bob-bilby') do |event|
+	event.respond(eightball)
 end
 
 bot.run
