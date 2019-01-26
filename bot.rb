@@ -54,7 +54,7 @@ $db = {
 		negative: []
 	},
 	/mac(kenzie)?/i => {
-		name: 'Honey',
+		name: 'Mackenzie',
 		gender: :female,
 		age: :kid,
 		negative: []
@@ -309,12 +309,13 @@ end
 
 def eightball
 	ra(EIGHTBALL)
-	puts ("convert -alpha set -background none -rotate #{rand(200).to_f/10} eightball/#{rand(20)}.png eightball/answer.png")
+	system ("convert -alpha set -background none -rotate #{(rand(400).to_f-200)/10.0} eightball/#{rand(20)+1}.png eightball/answer.png")
+	"eightball/answer.png"
 end
 
 puts deter("ship lucky and bluey")
 puts fortune
-puts eightball
+puts File.open(eightball)
 
 exit unless ENV['PRODUCTION']
 
@@ -331,7 +332,7 @@ bot.message(content: /bilby,? #fortune/i, in: 'bob-bilby') do |event|
 end
 
 bot.message(content: /bilby,? ask 8-?ball.*/i, in: 'bob-bilby') do |event|
-	event.respond(eightball)
+	event.send_file(File.open(eightball))
 end
 
 bot.run
