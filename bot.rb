@@ -9,7 +9,7 @@ $db = {
 		name: 'Bingo',
 		gender: :male,
 		age: :kid,
-		negative: []
+		negative: [:family_bluey]
 	},
 	/bandit/i => {
 		name: 'Bandit',
@@ -303,18 +303,26 @@ def deter(phrs)
 
 end
 
-def fortune
-	"Your fortune: #{ra(FORTUNE)}"
+def fortune(phrs)
+	p = phrs.match(/#fortune for (.+)/i)
+	
+	unless (p.nil? ? nil : p[1])
+		"Your fortune: #{ra(FORTUNE)}"
+	else
+		"#{p[1]}'s fortune: #{ra(FORTUNE)}"
+	end
 end
 
 def eightball
 	ra(EIGHTBALL)
-	system ("convert -alpha set -background none -rotate #{(rand(400).to_f-200)/10.0} eightball/#{rand(20)+1}.png eightball/answer.png")
+	system ("convert -alpha set -background none -rotate #{(rand(90)-45)} eightball/#{rand(20)+1}.png eightball/answer.png")
 	"eightball/answer.png"
 end
 
 puts deter("ship lucky and bluey")
-puts fortune
+puts fortune("#fortune for @draph#4441")
+puts fortune("#fortune draph")
+puts fortune("#fortune")
 puts File.open(eightball)
 
 exit unless ENV['PRODUCTION']
@@ -327,8 +335,12 @@ bot.message(content: /bilby,? ship.*/i, in: 'bob-bilby') do |event|
 	event.respond(deter(event.content))
 end
 
+bot.message(content: /bilby,? #fortune( for)? .*/i, in: 'bob-bilby') do |event|
+	event.respond(fortune(event.content))
+end
+
 bot.message(content: /bilby,? #fortune/i, in: 'bob-bilby') do |event|
-	event.respond(fortune)
+	event.respond(fortune(event.content))
 end
 
 bot.message(content: /bilby,? ask 8-?ball.*/i, in: 'bob-bilby') do |event|
