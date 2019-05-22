@@ -1,9 +1,16 @@
+require 'date'
 $db = {
 	/bluey/i => {
 		name: 'Bluey',
 		gender: :female,
 		age: :kid,
 		negative: [:family_bluey]
+	},
+	/jean(-?luc)?/i => {
+		name: 'Jean-Luc',
+		gender: :male,
+		age: :kid,
+		negative: []
 	},
 	/bingo/i => {
 		name: 'Bingo',
@@ -319,17 +326,42 @@ def eightball
 	"eightball/answer.png"
 end
 
-puts deter("ship lucky and bluey")
-puts fortune("#fortune for @draph#4441")
-puts fortune("#fortune draph")
-puts fortune("#fortune")
-puts File.open(eightball)
+def new_episodes
+  t = (Date.new(2019, 3, 31) - Date.today).to_i
+  "#{t} #{t == 1 ? 'day' : 'days'} until the next episodes of Bluey."
+end
 
-exit unless ENV['PRODUCTION']
+def help
+	%Q(* Ship characters, ask "bilby, ship [character] and [character]
+* Check your or someone's #fortune, ask "bilby, #fortune" or "bilby, fortune for @[person]"
+* Shake the magic 8-ball, ask "bilby, ask 8-ball [question]")
+end
 
 require 'discordrb'
 
-bot = Discordrb::Bot.new token: File.read('token').strip
+begin
+  bot = Discordrb::Bot.new token: File.read('token').strip
+rescue
+  exit
+end
+
+#$asked = false
+
+#bot.message(content: /bilby,? when is the next episode of bluey/i, in: 'bob-bilby') do |event|
+#	return if Date.today >= Date.new(2019, 3, 31)
+#	event.respond(new_episodes)
+#	return if $asked
+#	$asked = true
+#	loop do
+#		sleep(86400+rand(86400))
+#		event.respond(new_episodes)
+#		return if Date.today >= Date.new(2019, 3, 31)
+#	end
+#end
+
+bot.message(content: /bilby, help/i) do |event|
+	event.respond(help)
+end
 
 bot.message(content: /bilby,? ship.*/i, in: 'bob-bilby') do |event|
 	event.respond(deter(event.content))
