@@ -1,156 +1,7 @@
 require 'date'
-$db = {
-	/bluey/i => {
-		name: 'Bluey',
-		gender: :female,
-		age: :kid,
-		negative: [:family_bluey]
-	},
-	/jean(-?luc)?/i => {
-		name: 'Jean-Luc',
-		gender: :male,
-		age: :kid,
-		negative: []
-	},
-	/bingo/i => {
-		name: 'Bingo',
-		gender: :male,
-		age: :kid,
-		negative: [:family_bluey]
-	},
-	/bandit/i => {
-		name: 'Bandit',
-		gender: :male,
-		age: :adult,
-		negative: [:family_bluey, :bluey_parents]
-	},
-	/chil?li/i => {
-		name: 'Mrs Chilli',
-		gender: :female,
-		age: :adult,
-		negative: [:family_bluey, :bluey_parents]
-	},
-	/lucky/i => {
-		name: 'Lucky',
-		gender: :male,
-		age: :kid,
-		negative: []
-	},
-	/indy/i => {
-		name: 'Indy',
-		gender: :female,
-		age: :kid,
-		negative: []
-	},
-	/coco/i => {
-		name: 'CoCo',
-		gender: :female,
-		age: :kid,
-		negative: []
-	},
-	/snickers/i => {
-		name: 'Snickers',
-		gender: :male,
-		age: :kid,
-		negative: []
-	},
-	/honey/i => {
-		name: 'Honey',
-		gender: :female,
-		age: :kid,
-		negative: []
-	},
-	/mac(kenzie)?/i => {
-		name: 'Mackenzie',
-		gender: :female,
-		age: :kid,
-		negative: []
-	},
-	/chloe/i => {
-		name: 'Chloe',
-		gender: :female,
-		age: :kid,
-		negative: []
-	},
-	/judo/i => {
-		name: 'Judo',
-		gender: :female,
-		age: :kid,
-		negative: []
-	},
-	/rusty?/i => {
-		name: 'Rusty',
-		gender: :male,
-		age: :kid,
-		negative: []
-	},
-	/muffin/i => {
-		name: 'Muffin',
-		gender: :female,
-		age: :kid,
-		negative: []
-	},
-	/socks/i => {
-		name: 'Socks',
-		gender: :female,
-		age: :kid,
-		negative: []
-	},
-	/pretzel/i => {
-		name: 'Pretzel',
-		gender: :male,
-		age: :kid,
-		negative: []
-	},
-	/bentley/i => {
-		name: 'Bentley',
-		gender: :female,
-		age: :kid,
-		negative: []
-	},
-	/missy/i => {
-		name: 'Missy',
-		gender: :female,
-		age: :kid,
-		negative: []
-	},
-	/rupert/i => {
-		name: 'Rupert',
-		gender: :male,
-		age: :kid,
-		negative: []
-	},
-	/juniper/i => {
-		name: 'Juniper',
-		gender: :female,
-		age: :kid,
-		negative: []
-	},
-	/buddy/i => {
-		name: 'Buddy',
-		gender: :male,
-		age: :kid,
-		negative: []
-	},
-	/(uncle )?strip/i => {
-		name: 'Uncle Strip',
-		gender: :male,
-		age: :adult,
-		negative: [:family_bluey, :cousin_parents]
-	},
-	/(aunt )?trix(ie)?/i => {
-		name: 'Aunt Trixie',
-		gender: :female,
-		age: :adult,
-		negative: [:family_bluey, :cousin_parents]
-	},
-	/buddy/i => {
-		name: 'Buddy',
-		gender: :male,
-		age: :kid,
-		negative: []
-	},
-}
+require 'sqlite3'
+require './chars.rb'
+require 'chronic'
 
 FORTUNE = [
 'Reply hazy, try again',
@@ -167,33 +18,9 @@ FORTUNE = [
 'Very Bad Luck',
 'Godly Luck']
 
-EIGHTBALL = [
-'It is certain.',
-'It is decidedly so.',
-'Without a doubt.',
-'Yes - definitely.',
-'You may rely on it',
-'As I see it, yes',
-'Most likely.',
-'Outlook good.',
-'Yes.',
-'Signs point to yes.',
-'Reply hazy, try again later',
-'Ask again later.',
-'Better not tell you now.',
-'Cannot predict now.',
-'Concentrate and ask again.',
-'Don\'t count on it',
-'My reply is no.',
-'My sources say no.',
-'Outlook not so good',
-'Very doubtful'
-]
-
-
 def f(name)
 	return if name.nil?
-	$db.select{|r| !(r =~ name).nil? }
+	$idb.select{|r| !(r =~ name).nil? }
 end
 
 def speculate(a, b)
@@ -321,14 +148,19 @@ def fortune(phrs)
 end
 
 def eightball
-	ra(EIGHTBALL)
 	system ("convert -alpha set -background none -rotate #{(rand(90)-45)} eightball/#{rand(20)+1}.png eightball/answer.png")
 	"eightball/answer.png"
 end
 
-def new_episodes
-  t = (Date.new(2019, 3, 31) - Date.today).to_i
-  "#{t} #{t == 1 ? 'day' : 'days'} until the next episodes of Bluey."
+def episodes(query)
+	p = (query || 'latest episodes from today').match(/latest episodes from (.*)/i)
+	period = Chronic.parse(p[1])
+	return "Couldn't understand that..." unless period
+	rs = $db.execute("select name, aired from episodes where date(aired) <= date(?) order by aired desc limit 5", period.iso8601)
+	return "No episodes before #{p[1]}!" if rs.length == 0
+	report = rs.collect{|r| "#{r.first} (aired #{r.last})"}.join("\n")
+	puts period
+	report
 end
 
 def help
@@ -337,6 +169,18 @@ def help
 * Shake the magic 8-ball, ask "bilby, ask 8-ball [question]")
 end
 
+begin
+	$db = SQLite3::Database.open 'episodes.db'
+rescue SQLite3::Exception => e
+	puts e
+	$db.close if $db
+end
+
+puts episodes(nil)
+puts episodes("bilby, list the latest episodes from october 24 2018")
+puts episodes("bilby, list the latest episodes from sdfjoisdjfoisj")
+puts deter("bilby, ship bluey and lucky")
+
 require 'discordrb'
 
 begin
@@ -344,20 +188,6 @@ begin
 rescue
   exit
 end
-
-#$asked = false
-
-#bot.message(content: /bilby,? when is the next episode of bluey/i, in: 'bob-bilby') do |event|
-#	return if Date.today >= Date.new(2019, 3, 31)
-#	event.respond(new_episodes)
-#	return if $asked
-#	$asked = true
-#	loop do
-#		sleep(86400+rand(86400))
-#		event.respond(new_episodes)
-#		return if Date.today >= Date.new(2019, 3, 31)
-#	end
-#end
 
 bot.message(content: /bilby, help/i) do |event|
 	event.respond(help)
@@ -379,4 +209,13 @@ bot.message(content: /bilby,? ask 8-?ball.*/i, in: 'bob-bilby') do |event|
 	event.send_file(File.open(eightball))
 end
 
+bot.message(content: /bilby,? list the latest episodes/i, in: 'bob-bilby') do |event|
+	event.respond(episodes(nil))
+end
+
+bot.message(content: /bilby,? list the latest episodes from .*/i, in: 'bob-bilby') do |event|
+	event.respond(episodes(event.content))
+end
+
 bot.run
+$db.close if $db
