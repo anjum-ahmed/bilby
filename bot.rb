@@ -163,9 +163,79 @@ def episodes(query)
 	report
 end
 
+def generate_tier(tier, episodes)
+	if episodes.empty?
+		tiles = "tierlist/empty_tier.png"
+	else
+		tiles = "tierlist/#{tier}.png"
+		eps = episodes.map { |e| "'cards/#{e}.png'" }.join(' ')
+		system("montage #{eps} -geometry +2+2 -tile 6x -background \"#1a1a1a\" #{tiles}")
+	end
+	system("montage labels/#{tier}.png #{tiles} -geometry +4+4 -background black tierlist/#{tier}_tier_tiles.png")
+end
+
+def generate_tiers(eps)
+	eps.each do |tier, episodes|
+		generate_tier(tier, episodes)
+	end
+	system("montage #{['S', 'A', 'B', 'C', 'D', 'E', 'F'].map { |t| "tierlist/#{t}_tier_tiles.png" }.join(' ')} -geometry +0+0 -tile x8 -background black tierlist/tierlist.png")
+end
+
+def generate_tierlist
+	h = {}
+	['S', 'A', 'B', 'C', 'D', 'E', 'F'].each do |tier|
+		rs = $db.execute("select * from (select episodes.name, scores.score, MAX(scores.created_at) from scores, episodes where scores.episode_id = episodes.id group by episode_id) where score = ?", [tier])
+		h[tier] = rs.map { |row| row.first }
+	end
+	generate_tiers(h)
+	"tierlist/tierlist.png"
+end
+
+def insert_score(score, episode)
+	episode_id_row = $db.execute("select id from episodes where name = ? limit 1 collate nocase", episode)
+	return -1 if episode_id_row.length == 0
+	episode_id = episode_id_row.first
+	$db.execute("insert into scores(episode_id, score, created_at) values(?, ?, ?)", [episode_id, score, DateTime.now.to_s])
+end
+
+
+def decouple(phrase)
+	phrasing = phrase.match(/(.+) as (S|A|B|C|D|E|F|none)/)
+	return nil unless phrasing
+	phrase_episode = phrasing[1]
+	phrased_rating = phrasing[2]
+	{episode_name: phrasing[1], score: phrasing[2]}
+end
+
+def score(phrase)
+	watched = []
+	stuff = phrase.match(/score episodes? (.+)/)
+	return [nil] unless stuff
+	puts stuff[1]
+	stuff[1].split(",").map(&:strip).each do |pair|
+		watched << decouple(pair)
+	end
+	watched
+end
+
+def add_score(phrase)
+	parsed = score(phrase)
+	if parsed.include?(nil)
+		return ["Didn't understand that"]
+	end
+	errors = []
+	parsed.each do |score_hash|
+		unless insert_score(score_hash[:score], score_hash[:episode_name])
+			errors << score_hash[:episode_name]
+		end
+	end
+	return errors
+end
+
 def help
 	%Q(* Ship characters, ask "bilby, ship [character] and [character]
 * Check your or someone's #fortune, ask "bilby, #fortune" or "bilby, fortune for @[person]"
+* Check the latest episdoes, as, "bilby, list the latest episodes [from date]
 * Shake the magic 8-ball, ask "bilby, ask 8-ball [question]")
 end
 
@@ -176,10 +246,10 @@ rescue SQLite3::Exception => e
 	$db.close if $db
 end
 
-puts episodes(nil)
-puts episodes("bilby, list the latest episodes from october 24 2018")
-puts episodes("bilby, list the latest episodes from sdfjoisdjfoisj")
-puts deter("bilby, ship bluey and lucky")
+rs = $db.execute("select name from episodes")
+rs.each do |ep|
+	puts ep.first unless File.exist?("cards/#{ep.first}.png")
+end
 
 require 'discordrb'
 
@@ -215,6 +285,19 @@ end
 
 bot.message(content: /bilby,? list the latest episodes from .*/i, in: 'bob-bilby') do |event|
 	event.respond(episodes(event.content))
+end
+
+bot.message(content: /bilby,? score episode .*/i, in: 'bob-bilby') do |event|
+	errors = add_score(event.content)
+	if errors.empty
+		event.respond("Alright")
+	else
+		event.respond("Sorry didn't recognise #{errors.join(', ')}")
+	end
+end
+
+bot.message(content: /bilby,? show tier list/i, in: 'bob-bilby') do |event|
+	event.send_file(File.open(generate_tierlist))
 end
 
 bot.run
