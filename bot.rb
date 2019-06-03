@@ -159,7 +159,6 @@ def episodes(query)
 	rs = $db.execute("select name, aired from episodes where date(aired) <= date(?) order by aired desc limit 5", period.iso8601)
 	return "No episodes before #{p[1]}!" if rs.length == 0
 	report = rs.collect{|r| "#{r.first} (aired #{r.last})"}.join("\n")
-	puts period
 	report
 end
 
@@ -192,10 +191,11 @@ def generate_tierlist
 end
 
 def insert_score(score, episode)
-	episode_id_row = $db.execute("select id from episodes where name = ? limit 1 collate nocase", episode)
+	episode_id_row = $db.execute("select id from episodes where name = ? collate nocase limit 1", episode)
 	return -1 if episode_id_row.length == 0
 	episode_id = episode_id_row.first
 	$db.execute("insert into scores(episode_id, score, created_at) values(?, ?, ?)", [episode_id, score, DateTime.now.to_s])
+	return 0
 end
 
 
@@ -211,7 +211,6 @@ def score(phrase)
 	watched = []
 	stuff = phrase.match(/score episodes? (.+)/)
 	return [nil] unless stuff
-	puts stuff[1]
 	stuff[1].split(",").map(&:strip).each do |pair|
 		watched << decouple(pair)
 	end
@@ -221,12 +220,12 @@ end
 def add_score(phrase)
 	parsed = score(phrase)
 	if parsed.include?(nil)
-		return ["Didn't understand that"]
+		return ["that."]
 	end
 	errors = []
 	parsed.each do |score_hash|
-		unless insert_score(score_hash[:score], score_hash[:episode_name])
-			errors << score_hash[:episode_name]
+		if insert_score(score_hash[:score], score_hash[:episode_name]) == -1
+			errors << "'#{score_hash[:episode_name]}'"
 		end
 	end
 	return errors
@@ -250,6 +249,8 @@ rs = $db.execute("select name from episodes")
 rs.each do |ep|
 	puts ep.first unless File.exist?("cards/#{ep.first}.png")
 end
+
+generate_tierlist
 
 require 'discordrb'
 
@@ -289,10 +290,10 @@ end
 
 bot.message(content: /bilby,? score episode .*/i, in: 'bob-bilby') do |event|
 	errors = add_score(event.content)
-	if errors.empty
+	if errors.empty?
 		event.respond("Alright")
 	else
-		event.respond("Sorry didn't recognise #{errors.join(', ')}")
+		event.respond("Sorry didn't recognise #{errors.join(', ')}.")
 	end
 end
 
