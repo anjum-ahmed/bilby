@@ -28,7 +28,7 @@ def speculate(a, b)
 end
 
 def ra(ary)
-	ary.shuffle.first
+	ary[rand(ary.length)]
 end
 
 def calculate(a_h, b_h)
