@@ -1,4 +1,94 @@
 $idb = {
+	/snickers mum/i => {
+		name: 'Snickers’ Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/mackenzies mum/i => {
+		name: 'Mackenzie’s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/honeys mum/i => {
+		name: 'Honey’s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/junipers mum/i => {
+		name: 'Juniper’s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/cocos mum/i => {
+		name: 'Coco’s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/indys mum/i => {
+		name: 'Indy’s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/chloes mum/i => {
+		name: 'Chloe’s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/jean-lucs mum/i => {
+		name: 'Jean-Luc’s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/luckys dad/i => {
+		name: 'Lucky’s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/wintons dad/i => {
+		name: 'Winton’s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/chloes dad/i => {
+		name: 'Chloe’s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/honeys dad/i => {
+		name: 'Honey’s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/ruperts dad/i => {
+		name: 'Rupert’s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/mackenzies dad/i => {
+		name: 'Mackenzie’s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/jean-lucs dad/i => {
+		name: 'Jean-Luc’s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
 	/bluey/i => {
 		name: 'Bluey',
 		gender: :female,
@@ -59,7 +149,7 @@ $idb = {
 		age: :kid,
 		negative: []
 	},
-	/mac(kenzie)?/i => {
+	/mac(kenzie)?$/i => {
 		name: 'Mackenzie',
 		gender: :female,
 		age: :kid,
@@ -235,96 +325,6 @@ $idb = {
 	},
 	/rocko/i => {
 		name: 'Rocko',
-		gender: :male,
-		age: :adult,
-		negative: []
-	},
-	/snickers mum/i => {
-		name: 'Snickers’ Mum',
-		gender: :female,
-		age: :adult,
-		negative: []
-	},
-	/mackenzies mum/i => {
-		name: 'Mackenzie’s Mum',
-		gender: :female,
-		age: :adult,
-		negative: []
-	},
-	/honeys mum/i => {
-		name: 'Honey’s Mum',
-		gender: :female,
-		age: :adult,
-		negative: []
-	},
-	/junipers mum/i => {
-		name: 'Juniper’s Mum',
-		gender: :female,
-		age: :adult,
-		negative: []
-	},
-	/cocos mum/i => {
-		name: 'Coco’s Mum',
-		gender: :female,
-		age: :adult,
-		negative: []
-	},
-	/indys mum/i => {
-		name: 'Indy’s Mum',
-		gender: :female,
-		age: :adult,
-		negative: []
-	},
-	/chloes mum/i => {
-		name: 'Chloe’s Mum',
-		gender: :female,
-		age: :adult,
-		negative: []
-	},
-	/jean-lucs mum/i => {
-		name: 'Jean-Luc’s Mum',
-		gender: :female,
-		age: :adult,
-		negative: []
-	},
-	/luckys dad/i => {
-		name: 'Lucky’s Dad',
-		gender: :male,
-		age: :adult,
-		negative: []
-	},
-	/wintons dad/i => {
-		name: 'Winton’s Dad',
-		gender: :male,
-		age: :adult,
-		negative: []
-	},
-	/chloes dad/i => {
-		name: 'Chloe’s Dad',
-		gender: :male,
-		age: :adult,
-		negative: []
-	},
-	/honeys dad/i => {
-		name: 'Honey’s Dad',
-		gender: :male,
-		age: :adult,
-		negative: []
-	},
-	/ruperts dad/i => {
-		name: 'Rupert’s Dad',
-		gender: :male,
-		age: :adult,
-		negative: []
-	},
-	/mackenzies dad/i => {
-		name: 'Mackenzie’s Dad',
-		gender: :male,
-		age: :adult,
-		negative: []
-	},
-	/jean-lucs dad/i => {
-		name: 'Jean-Luc’s Dad',
 		gender: :male,
 		age: :adult,
 		negative: []
