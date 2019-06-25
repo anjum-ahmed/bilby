@@ -77,7 +77,7 @@ $idb = {
 		age: :kid,
 		negative: []
 	},
-	/rusty?/i => {
+	/rusty/i => {
 		name: 'Rusty',
 		gender: :male,
 		age: :kid,
@@ -87,13 +87,13 @@ $idb = {
 		name: 'Muffin',
 		gender: :female,
 		age: :kid,
-		negative: []
+		negative: [:family_bluey]
 	},
 	/socks/i => {
 		name: 'Socks',
 		gender: :female,
 		age: :kid,
-		negative: []
+		negative: [:family_bluey]
 	},
 	/pretzel/i => {
 		name: 'Pretzel',
@@ -131,8 +131,8 @@ $idb = {
 		age: :kid,
 		negative: []
 	},
-	/(uncle )?strip/i => {
-		name: 'Uncle Strip',
+	/(uncle )?stripe/i => {
+		name: 'Uncle Stripe',
 		gender: :male,
 		age: :adult,
 		negative: [:family_bluey, :cousin_parents]
@@ -143,10 +143,191 @@ $idb = {
 		age: :adult,
 		negative: [:family_bluey, :cousin_parents]
 	},
-	/buddy/i => {
-		name: 'Buddy',
+	/wendy/i => {
+		name: 'Wendy',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/bob/i => {
+		name: 'Bob',
+		gender: :male,
+		age: :adult,
+		negative: [:family_bluey]
+	},
+	/nana/i => {
+		name: 'Nana',
+		gender: :female,
+		age: :adult,
+		negative: [:family_bluey]
+	},
+	/calypso/i => {
+		name: 'Calypso',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/busker/i => {
+		name: 'Busker',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/winton/i => {
+		name: 'Winton',
 		gender: :male,
 		age: :kid,
 		negative: []
 	},
+	/poffertje/i => {
+		name: 'Poffertje Dog',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/docket/i => {
+		name: 'Docket Boy',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/doctor/i => {
+		name: 'Doctor',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/nurse/i => {
+		name: 'Nurse',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/surfer/i => {
+		name: 'Surfer',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/checkout/i => {
+		name: 'Checkout Lady',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/vet/i => {
+		name: 'Vet Corgi',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/customer/i => {
+		name: 'Customer',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/mrs retriever/i => {
+		name: 'Mrs. Retriever',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/rocko/i => {
+		name: 'Rocko',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/snickers mum/i => {
+		name: 'Snickers’ Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/mackenzies mum/i => {
+		name: 'Mackenzie’s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/honeys mum/i => {
+		name: 'Honey’s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/junipers mum/i => {
+		name: 'Juniper’s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/cocos mum/i => {
+		name: 'Coco’s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/indys mum/i => {
+		name: 'Indy’s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/chloes mum/i => {
+		name: 'Chloe’s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/jean-lucs mum/i => {
+		name: 'Jean-Luc’s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/luckys dad/i => {
+		name: 'Lucky’s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/wintons dad/i => {
+		name: 'Winton’s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/chloes dad/i => {
+		name: 'Chloe’s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/honeys dad/i => {
+		name: 'Honey’s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/ruperts dad/i => {
+		name: 'Rupert’s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/mackenzies dad/i => {
+		name: 'Mackenzie’s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/jean-lucs dad/i => {
+		name: 'Jean-Luc’s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	
 }
