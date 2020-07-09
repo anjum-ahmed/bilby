@@ -1,8 +1,14 @@
 $idb = {
-	/snickers mum/i => {
+	/snicker'?s mum/i => {
 		name: 'Snickers’ Mum',
 		gender: :female,
 		age: :adult,
+		negative: []
+	},
+	/mackenzie/i => {
+		name: 'Mackenzie',
+		gender: :male,
+		age: :kid,
 		negative: []
 	},
 	/mackenzies mum/i => {
@@ -11,79 +17,79 @@ $idb = {
 		age: :adult,
 		negative: []
 	},
-	/honeys mum/i => {
+	/honey'?s mum/i => {
 		name: 'Honey’s Mum',
 		gender: :female,
 		age: :adult,
-		negative: []
+		negative: [:honey_parents]
 	},
-	/junipers mum/i => {
+	/juniper'?s mum/i => {
 		name: 'Juniper’s Mum',
 		gender: :female,
 		age: :adult,
 		negative: []
 	},
-	/cocos mum/i => {
+	/coco'?s mum/i => {
 		name: 'Coco’s Mum',
 		gender: :female,
 		age: :adult,
-		negative: []
+		negative: [:coco_parents]
 	},
-	/indys mum/i => {
+	/indy'?s mum/i => {
 		name: 'Indy’s Mum',
 		gender: :female,
 		age: :adult,
 		negative: []
 	},
-	/chloes mum/i => {
+	/chloe'?s mum/i => {
 		name: 'Chloe’s Mum',
 		gender: :female,
 		age: :adult,
 		negative: []
 	},
-	/jean-lucs mum/i => {
+	/jean-?luc'?s mum/i => {
 		name: 'Jean-Luc’s Mum',
 		gender: :female,
 		age: :adult,
 		negative: []
 	},
-	/luckys dad/i => {
-		name: 'Lucky’s Dad',
+	/(lucky'?s dad|pat)/i => {
+		name: 'Pat',
 		gender: :male,
 		age: :adult,
 		negative: []
 	},
-	/wintons dad/i => {
+	/winton'?s dad/i => {
 		name: 'Winton’s Dad',
 		gender: :male,
 		age: :adult,
 		negative: []
 	},
-	/chloes dad/i => {
+	/chloe'?s dad/i => {
 		name: 'Chloe’s Dad',
 		gender: :male,
 		age: :adult,
 		negative: []
 	},
-	/honeys dad/i => {
+	/honey'?s dad/i => {
 		name: 'Honey’s Dad',
 		gender: :male,
 		age: :adult,
-		negative: []
+		negative: [:honey_parents]
 	},
-	/ruperts dad/i => {
-		name: 'Rupert’s Dad',
+	/Gruber'?s dad/i => {
+		name: 'Gruber’s Dad',
 		gender: :male,
 		age: :adult,
 		negative: []
 	},
-	/mackenzies dad/i => {
+	/mackenzie'?s dad/i => {
 		name: 'Mackenzie’s Dad',
 		gender: :male,
 		age: :adult,
 		negative: []
 	},
-	/jean-lucs dad/i => {
+	/jean(-?luc)?'?s dad/i => {
 		name: 'Jean-Luc’s Dad',
 		gender: :male,
 		age: :adult,
@@ -173,6 +179,12 @@ $idb = {
 		age: :kid,
 		negative: []
 	},
+	/rusty'?s dad/i => {
+		name: 'Rusty\'s dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
 	/muffin/i => {
 		name: 'Muffin',
 		gender: :female,
@@ -203,8 +215,8 @@ $idb = {
 		age: :kid,
 		negative: []
 	},
-	/rupert/i => {
-		name: 'Rupert',
+	/gruber/i => {
+		name: 'Gruber',
 		gender: :male,
 		age: :kid,
 		negative: []
@@ -233,7 +245,7 @@ $idb = {
 		age: :adult,
 		negative: [:family_bluey, :cousin_parents]
 	},
-	/wendy/i => {
+	/(judo's mum|wendy)/i => {
 		name: 'Wendy',
 		gender: :female,
 		age: :adult,
@@ -329,5 +341,35 @@ $idb = {
 		age: :adult,
 		negative: []
 	},
-	
+  #####
+	/jack/i => {
+		name: 'Jack',
+		gender: :male,
+		age: :kid,
+		negative: []
+	},
+	/jack'?s dad/i => {
+		name: 'Jack\'s Dad',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/jack'?s mum/i => {
+		name: 'Jack\'s Mum',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/jack'?s sister/i => {
+		name: 'Jack\'s sister',
+		gender: :female,
+		age: :kid,
+		negative: []
+	},
+	/Lila/i => {
+		name: 'Lila',
+		gender: :female,
+		age: :kid,
+		negative: []
+	}
 }
