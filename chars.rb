@@ -371,5 +371,131 @@ $idb = {
 		gender: :female,
 		age: :kid,
 		negative: []
+	},
+	/rad/i => {
+		name: 'Rad',
+		gender: :male,
+		age: :adult,
+		negative: [:family_bluey]
+	},
+	/alfie/i => {
+		name: 'Alfie',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/bella|coco'?s mum/i => {
+		name: 'Bella',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/captain/i => {
+		name: 'Captain',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/checkout( dog)?/i => {
+		name: 'Checkout Dog',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/checkout( lady)?/i => {
+		name: 'Checkout Lady',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/chris/i => {
+		name: 'Chris',
+		gender: :male,
+		age: :adult,
+		negative: [:family_bluey]
+	},
+	/daisy/i => {
+		name: 'Daisy',
+		gender: :female,
+		age: :kid,
+		negative: []
+	},
+	/docket boy/i => {
+		name: 'Docket Boy',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/winnie'?s dad|fido/i => {
+		name: 'Fido',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/winnie'?s dad|fido/i => {
+		name: 'Fido',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/harley/i => {
+		name: 'Harley',
+		gender: :female,
+		age: :kid,
+		negative: []
+	},
+	/hercules/i => {
+		name: 'Hercules',
+		gender: :male,
+		age: :kid,
+		negative: []
+	},
+	/hercules/i => {
+		name: 'Hercules',
+		gender: :male,
+		age: :kid,
+		negative: []
+	},
+	/jasper( w)?/i => {
+		name: 'Jasper W',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/marcus/i => {
+		name: 'Marcus',
+		gender: :male,
+		age: :kid,
+		negative: []
+	},
+	/mia/i => {
+		name: 'Mia',
+		gender: :female,
+		age: :kid,
+		negative: []
+	},
+	/pony( lady)?/i => {
+		name: 'Pony Lady',
+		gender: :female,
+		age: :adult,
+		negative: []
+	},
+	/postie/i => {
+		name: 'Postie',
+		gender: :male,
+		age: :adult,
+		negative: []
+	},
+	/sadie/i => {
+		name: 'Sadie',
+		gender: :female,
+		age: :girl,
+		negative: []
+	},
+	/shanelle/i => {
+		name: 'Shanelle',
+		gender: :female,
+		age: :adult,
+		negative: []
 	}
 }
